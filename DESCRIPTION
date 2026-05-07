@@ -1,7 +1,7 @@
 Package: WorkflowsTestPkg
 Type: Package
 Title: Test Package for Felixmil/Workflows Reusable Workflows
-Version: 0.1.1.9002
+Version: 0.1.1.9003
 Authors@R: person("Felix", "Mil", email = "felix.mil@esqlabs.com", role = c("aut", "cre"))
 Description: Minimal R package used to exercise the description-manager reusable workflow.
 License: MIT + file LICENSE

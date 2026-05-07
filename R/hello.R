@@ -2,4 +2,4 @@
 #'
 #' @return A string
 #' @export
-hello <- \() "hello, splendid world!"
+hello <- \() "hello, brilliant world!"

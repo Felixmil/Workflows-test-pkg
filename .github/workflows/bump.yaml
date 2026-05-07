@@ -8,5 +8,7 @@ on:
 jobs:
   bump:
     uses: Felixmil/Workflows/.github/workflows/bump_dev_version_v2.yaml@simplify-bump-dev-version-action
+    permissions:
+      contents: write
     with:
       workflows-ref: simplify-bump-dev-version-action

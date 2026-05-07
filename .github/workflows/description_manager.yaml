@@ -1,13 +1,13 @@
 ---
-name: bump-dev-version
+name: description-manager
 
 on:
   push:
     branches: [main]
 
 jobs:
-  bump:
-    uses: Felixmil/Workflows/.github/workflows/bump_dev_version_v2.yaml@simplify-bump-dev-version-action
+  manage:
+    uses: Felixmil/Workflows/.github/workflows/description_manager.yaml@simplify-bump-dev-version-action
     permissions:
       contents: write
     with:

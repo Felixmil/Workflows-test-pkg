@@ -7,5 +7,5 @@ Description: Minimal R package used to exercise the bump-dev-version reusable wo
 License: MIT + file LICENSE
 Encoding: UTF-8
 Remotes:
-    tidyverse/dplyr
+    tidyverse/dplyr@*release
 RoxygenNote: 7.3.2

@@ -1,6 +1,5 @@
 ---
-# Manual "restore development mode" button (also runs automatically after a
-# release via main-workflow's dev-pr job).
+# Manual "restore development mode" button.
 name: dev-pr
 
 on:
@@ -11,3 +10,9 @@ permissions: write-all
 jobs:
   dev-pr:
     uses: Felixmil/Workflows/.github/workflows/dev_pr.yaml@rework-description-tagging
+    with:
+      # App token so the opened PR triggers pr.yaml CI (a PR opened with the
+      # default GITHUB_TOKEN does NOT trigger other workflows).
+      app-id: ${{ vars.OSP_BOT_APP_ID }}
+    secrets:
+      private-key: ${{ secrets.OSP_BOT_PRIVATE_KEY }}

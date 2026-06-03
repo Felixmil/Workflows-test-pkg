@@ -23,3 +23,8 @@ jobs:
     uses: Felixmil/Workflows/.github/workflows/release_pr.yaml@rework-description-tagging
     with:
       which: ${{ inputs.which }}
+      # App token so the opened PR triggers pr.yaml CI (a PR opened with the
+      # default GITHUB_TOKEN does NOT trigger other workflows).
+      app-id: ${{ vars.OSP_BOT_APP_ID }}
+    secrets:
+      private-key: ${{ secrets.OSP_BOT_PRIVATE_KEY }}

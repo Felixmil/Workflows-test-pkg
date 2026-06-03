@@ -45,7 +45,18 @@ jobs:
       # Ubuntu-only matrix to keep test runs fast.
       os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
 
+  # Release only when R-CMD-check SUCCEEDED on every matrix OS. needs: aggregates
+  # the matrix, so result == 'success' means all legs passed. No !cancelled()
+  # here: a failed or cancelled check must block the release.
   publish-release:
-    needs: R-CMD-check
-    if: ${{ !cancelled() && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
+    needs: [R-CMD-check]
+    if: ${{ needs.R-CMD-check.result == 'success' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
     uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging
+
+  # After a SUCCESSFUL release, open a PR putting the repo back in dev mode
+  # (Version x.y.z -> x.y.z.9000, unpin Remotes, NEWS dev header). Gated on
+  # publish-release succeeding; the workflow itself no-ops on a dev version.
+  open-dev-cycle:
+    needs: [publish-release]
+    if: ${{ needs.publish-release.result == 'success' }}
+    uses: Felixmil/Workflows/.github/workflows/open_dev_cycle.yaml@rework-description-tagging

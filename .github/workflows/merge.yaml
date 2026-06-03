@@ -1,0 +1,36 @@
+---
+# Merge pipeline: what happens when something lands on the default branch.
+#
+#   R-CMD-check -> build + check the merged tree (uploads per-OS binaries)
+#   then, by the DESCRIPTION version kind:
+#     release x.y.z      -> publish-release (tag vX.Y.Z + GitHub Release + binaries)
+#     dev     x.y.z.NNNN -> bump-dev-version (bump .NNNN, commit to main)
+#
+# publish_release and bump_dev_version each detect the version kind internally
+# and no-op for the other kind, so both jobs run but only the matching one acts.
+name: merge
+
+on:
+  push:
+    branches: [main]
+
+permissions: write-all
+
+jobs:
+  R-CMD-check:
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    with:
+      # Ubuntu-only matrix to keep test runs fast.
+      os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
+
+  # Release version on main -> tag + GitHub Release. Gated on R-CMD-check success
+  # (all matrix legs). publish_release no-ops on a dev version.
+  publish-release:
+    needs: [R-CMD-check]
+    if: ${{ needs.R-CMD-check.result == 'success' }}
+    uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging
+
+  # Dev version on main -> bump the .NNNN suffix. bump_dev_version no-ops on a
+  # release version. Independent of the release path.
+  bump-dev-version:
+    uses: Felixmil/Workflows/.github/workflows/bump_dev_version.yaml@rework-description-tagging

@@ -1,0 +1,30 @@
+---
+# Scheduled + on-demand health checks of the default branch, against both
+# dependency states:
+#   R-CMD-check          -> build + check against current (dev) deps, i.e.
+#                           DESCRIPTION's Remotes as-is (bare on dev main)
+#   R-CMD-check-released -> pin Remotes to @*release ephemerally and check
+#                           against the latest RELEASED OSP deps
+#
+# Runs nightly and is manually dispatchable. The released-deps check runs for
+# every version (dev included), catching a dev version drifting out of
+# compatibility with released deps.
+name: check
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  R-CMD-check:
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    with:
+      os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
+
+  R-CMD-check-released:
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@rework-description-tagging
+    with:
+      os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'

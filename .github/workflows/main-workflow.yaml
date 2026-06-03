@@ -1,0 +1,42 @@
+---
+# Caller workflow exercising the split reusable workflows from
+# Felixmil/Workflows@rework-description-tagging.
+#
+#   pull_request      -> sync-remotes (fix Remotes in the PR)
+#                        R-CMD-check
+#   push to main      -> bump-dev-version (bump x.y.z.NNNN on dev; no-op on release)
+#                        R-CMD-check (+ uploads per-OS binaries)
+#                        publish-release (tag + GitHub Release on a release version)
+#   workflow_dispatch -> R-CMD-check + publish-release (manual (re)release)
+#
+# main is unprotected in this test repo, so bump-dev-version and the tag push use
+# the default GITHUB_TOKEN (no GitHub App token wired).
+name: main-workflow
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  sync-remotes:
+    if: github.event_name == 'pull_request'
+    uses: Felixmil/Workflows/.github/workflows/sync_remotes.yaml@rework-description-tagging
+
+  bump-dev-version:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: Felixmil/Workflows/.github/workflows/bump_dev_version.yaml@rework-description-tagging
+
+  R-CMD-check:
+    if: ${{ !cancelled() }}
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+
+  publish-release:
+    needs: R-CMD-check
+    if: ${{ !cancelled() && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
+    uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging

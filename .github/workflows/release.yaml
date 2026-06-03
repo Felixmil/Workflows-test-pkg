@@ -1,0 +1,16 @@
+---
+# Standalone release on demand. publish_release has no build dependency of its
+# own, so this dispatch tags + publishes the GitHub Release with NEWS.md notes.
+# With no build in the same run, no binaries are attached (best-effort, the job
+# still succeeds): this exercises the no-assets pathway.
+name: release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-release:
+    uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging

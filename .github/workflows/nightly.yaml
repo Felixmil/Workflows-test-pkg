@@ -1,0 +1,14 @@
+---
+# Nightly check against the latest *released* OSP dependencies. Runs for whatever
+# Version main currently carries (dev or release): pins Remotes to @*release
+# ephemerally, then R CMD check.
+name: nightly
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  R-CMD-check-released-deps:
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@rework-description-tagging

@@ -2,12 +2,14 @@
 # Caller workflow exercising the split reusable workflows from
 # Felixmil/Workflows@rework-description-tagging.
 #
-#   pull_request      -> sync-remotes (fix Remotes in the PR)
-#                        R-CMD-check
-#   push to main      -> bump-dev-version (bump x.y.z.NNNN on dev; no-op on release)
-#                        R-CMD-check (+ uploads per-OS binaries)
-#                        publish-release (tag + GitHub Release on a release version)
-#   workflow_dispatch -> R-CMD-check + publish-release (manual (re)release)
+#   pull_request -> sync-remotes (Remotes follow the version, commit to PR)
+#                   R-CMD-check (runs AFTER sync, so it checks the merge-able tree)
+#   push to main -> R-CMD-check, then by version kind:
+#                     release x.y.z      -> publish-release (tag + GitHub Release + binaries)
+#                     dev     x.y.z.NNNN -> bump-dev-version (bump .NNNN, commit)
+#
+# Releasing and restoring dev are separate manual workflows: release-pr.yaml and
+# dev-pr.yaml (each runs usethis + opens a PR validated by this pipeline).
 #
 # main is unprotected in this test repo, so bump-dev-version and the tag push use
 # the default GITHUB_TOKEN (no GitHub App token wired).
@@ -17,7 +19,6 @@ on:
   pull_request:
   push:
     branches: [main]
-  workflow_dispatch:
 
 # The repo default token is read-only and R-CMD-check-build uses `read-all`,
 # while bump/publish/sync need `contents: write`. A caller `permissions:` block
@@ -50,17 +51,10 @@ jobs:
   # `!cancelled()` opts out of GitHub's implicit "skip if any need was skipped"
   # (R-CMD-check transitively needs the skipped sync-remotes); the explicit
   # result check still blocks a FAILED check.
+  # A release PR hitting main = push to main with a release Version (x.y.z).
+  # publish_release detects the version kind and no-ops on a dev version, so this
+  # only acts on a real release commit. Gated on R-CMD-check success.
   publish-release:
     needs: [R-CMD-check]
-    if: ${{ !cancelled() && needs.R-CMD-check.result == 'success' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
+    if: ${{ !cancelled() && needs.R-CMD-check.result == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging
-
-  # After a SUCCESSFUL release, open a PR restoring development mode
-  # (usethis::use_dev_version() + unpin Remotes). Gated on publish-release
-  # succeeding. `!cancelled()` overrides the implicit skip (publish-release's
-  # transitive skipped needs); the result check enforces "only after a real
-  # release". dev_pr is also dispatchable on its own (see dev_pr.yaml caller).
-  dev-pr:
-    needs: [publish-release]
-    if: ${{ !cancelled() && needs.publish-release.result == 'success' }}
-    uses: Felixmil/Workflows/.github/workflows/dev_pr.yaml@rework-description-tagging

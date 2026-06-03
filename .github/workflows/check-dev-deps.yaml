@@ -1,0 +1,17 @@
+---
+# Nightly + on-demand check of the default branch against its CURRENT (dev)
+# dependencies: DESCRIPTION's Remotes as-is (bare on a dev main -> dev deps).
+name: check-dev-deps
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  R-CMD-check:
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    with:
+      os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'

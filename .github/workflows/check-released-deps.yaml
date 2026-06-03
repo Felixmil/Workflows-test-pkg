@@ -1,0 +1,19 @@
+---
+# Nightly + on-demand check of the default branch against the latest RELEASED
+# OSP dependencies: pins Remotes to @*release ephemerally, then R CMD check.
+# Runs for every version (dev included), catching a dev version drifting out of
+# compatibility with released deps.
+name: check-released-deps
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  R-CMD-check-released-deps:
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@rework-description-tagging
+    with:
+      os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'

@@ -1,14 +1,20 @@
 ---
-# Manual "publish the release" button: open a release PR for a given version.
+# Manual "publish the release" button: open a release PR, bumping the version by
+# the chosen component (usethis::use_version).
 name: release-pr
 
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Release version (x.y.z, no dev component), e.g. 0.2.2'
-        type: string
+      which:
+        description: 'Which component to bump: major, minor, or patch'
+        type: choice
         required: true
+        default: patch
+        options:
+          - major
+          - minor
+          - patch
 
 permissions: write-all
 
@@ -16,4 +22,4 @@ jobs:
   release-pr:
     uses: Felixmil/Workflows/.github/workflows/release_pr.yaml@rework-description-tagging
     with:
-      version: ${{ inputs.version }}
+      which: ${{ inputs.which }}

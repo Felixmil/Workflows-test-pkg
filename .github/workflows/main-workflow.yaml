@@ -33,7 +33,12 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: Felixmil/Workflows/.github/workflows/bump_dev_version.yaml@rework-description-tagging
 
+  # Runs after sync-remotes so it checks out the synced DESCRIPTION (the R
+  # environment must match the Remotes state sync-remotes produced). On push /
+  # dispatch, sync-remotes is skipped; a skipped need plus `if: !cancelled()`
+  # does not block this job, so it still runs.
   R-CMD-check:
+    needs: [sync-remotes]
     if: ${{ !cancelled() }}
     uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
     with:

@@ -36,6 +36,9 @@ jobs:
   R-CMD-check:
     if: ${{ !cancelled() }}
     uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    with:
+      # Ubuntu-only matrix to keep test runs fast.
+      os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
 
   publish-release:
     needs: R-CMD-check

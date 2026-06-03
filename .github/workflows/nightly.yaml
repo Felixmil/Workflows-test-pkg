@@ -16,3 +16,6 @@ permissions: read-all
 jobs:
   R-CMD-check-released-deps:
     uses: Felixmil/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@rework-description-tagging
+    with:
+      # Ubuntu-only matrix to keep test runs fast.
+      os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'

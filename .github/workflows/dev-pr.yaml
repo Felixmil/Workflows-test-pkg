@@ -1,0 +1,13 @@
+---
+# Manual "restore development mode" button (also runs automatically after a
+# release via main-workflow's dev-pr job).
+name: dev-pr
+
+on:
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  dev-pr:
+    uses: Felixmil/Workflows/.github/workflows/dev_pr.yaml@rework-description-tagging

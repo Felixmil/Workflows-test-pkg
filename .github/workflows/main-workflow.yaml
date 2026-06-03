@@ -55,12 +55,12 @@ jobs:
     if: ${{ !cancelled() && needs.R-CMD-check.result == 'success' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
     uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging
 
-  # After a SUCCESSFUL release, open a PR putting the repo back in dev mode
-  # (Version x.y.z -> x.y.z.9000, unpin Remotes, NEWS dev header). Gated on
-  # publish-release succeeding; the workflow itself no-ops on a dev version.
-  # `!cancelled()` overrides the implicit skip (publish-release's transitive
-  # skipped needs); the result check enforces "only after a real release".
-  open-dev-cycle:
+  # After a SUCCESSFUL release, open a PR restoring development mode
+  # (usethis::use_dev_version() + unpin Remotes). Gated on publish-release
+  # succeeding. `!cancelled()` overrides the implicit skip (publish-release's
+  # transitive skipped needs); the result check enforces "only after a real
+  # release". dev_pr is also dispatchable on its own (see dev_pr.yaml caller).
+  dev-pr:
     needs: [publish-release]
     if: ${{ !cancelled() && needs.publish-release.result == 'success' }}
-    uses: Felixmil/Workflows/.github/workflows/open_dev_cycle.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/dev_pr.yaml@rework-description-tagging

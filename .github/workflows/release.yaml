@@ -8,8 +8,9 @@ name: release
 on:
   workflow_dispatch:
 
-permissions:
-  contents: write
+# publish_release needs contents: write (tag/release) and actions: read
+# (download-artifact). The repo default token is read-only, so grant a superset.
+permissions: write-all
 
 jobs:
   publish-release:

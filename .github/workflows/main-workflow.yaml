@@ -19,6 +19,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# The repo default token is read-only and R-CMD-check-build uses `read-all`,
+# while bump/publish/sync need `contents: write`. A caller `permissions:` block
+# is a CEILING for called workflows, so grant a superset here.
+permissions: write-all
+
 jobs:
   sync-remotes:
     if: github.event_name == 'pull_request'

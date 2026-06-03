@@ -45,18 +45,22 @@ jobs:
       # Ubuntu-only matrix to keep test runs fast.
       os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
 
-  # Release only when R-CMD-check SUCCEEDED on every matrix OS. needs: aggregates
-  # the matrix, so result == 'success' means all legs passed. No !cancelled()
-  # here: a failed or cancelled check must block the release.
+  # Release only when R-CMD-check SUCCEEDED on every matrix OS. The matrix is
+  # aggregated by needs:, so result == 'success' means all legs passed. The
+  # `!cancelled()` opts out of GitHub's implicit "skip if any need was skipped"
+  # (R-CMD-check transitively needs the skipped sync-remotes); the explicit
+  # result check still blocks a FAILED check.
   publish-release:
     needs: [R-CMD-check]
-    if: ${{ needs.R-CMD-check.result == 'success' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
+    if: ${{ !cancelled() && needs.R-CMD-check.result == 'success' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')) }}
     uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging
 
   # After a SUCCESSFUL release, open a PR putting the repo back in dev mode
   # (Version x.y.z -> x.y.z.9000, unpin Remotes, NEWS dev header). Gated on
   # publish-release succeeding; the workflow itself no-ops on a dev version.
+  # `!cancelled()` overrides the implicit skip (publish-release's transitive
+  # skipped needs); the result check enforces "only after a real release".
   open-dev-cycle:
     needs: [publish-release]
-    if: ${{ needs.publish-release.result == 'success' }}
+    if: ${{ !cancelled() && needs.publish-release.result == 'success' }}
     uses: Felixmil/Workflows/.github/workflows/open_dev_cycle.yaml@rework-description-tagging

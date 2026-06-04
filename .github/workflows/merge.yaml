@@ -1,13 +1,11 @@
 ---
 # Merge pipeline: what happens when something lands on the default branch.
 #
-#   R-CMD-check -> build + check the merged tree (uploads per-OS binaries)
-#   then, by the DESCRIPTION version kind:
-#     release x.y.z      -> publish-release (tag vX.Y.Z + GitHub Release + binaries)
-#     dev     x.y.z.NNNN -> bump-dev-version (bump .NNNN, commit to main)
+#   R-CMD-check      -> build + check the merged tree
+#   bump-dev-version -> on a dev version, bump .NNNN and commit; release no-op
 #
-# publish_release and bump_dev_version each detect the version kind internally
-# and no-op for the other kind, so both jobs run but only the matching one acts.
+# Releasing (tag + GitHub Release) is NOT automatic on merge: it is a deliberate
+# manual dispatch, see publish.yaml.
 name: merge.yaml
 
 on:
@@ -23,14 +21,7 @@ jobs:
       # Ubuntu-only matrix to keep test runs fast.
       os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
 
-  # Release version on main -> tag + GitHub Release. Gated on R-CMD-check success
-  # (all matrix legs). publish_release no-ops on a dev version.
-  publish-release:
-    needs: [R-CMD-check]
-    if: ${{ needs.R-CMD-check.result == 'success' }}
-    uses: Felixmil/Workflows/.github/workflows/publish-release.yaml@rework-description-tagging
-
-  # Dev version on main -> bump the .NNNN suffix. bump_dev_version no-ops on a
-  # release version. Independent of the release path.
+  # Dev version on main -> bump the .NNNN suffix. bump-dev-version no-ops on a
+  # release version.
   bump-dev-version:
     uses: Felixmil/Workflows/.github/workflows/bump-dev-version.yaml@rework-description-tagging

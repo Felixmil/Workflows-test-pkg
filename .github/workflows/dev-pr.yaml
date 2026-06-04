@@ -1,6 +1,6 @@
 ---
 # Manual "restore development mode" button.
-name: dev-pr
+name: dev-pr.yaml
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions: write-all
 
 jobs:
   dev-pr:
-    uses: Felixmil/Workflows/.github/workflows/dev_pr.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/dev-pr.yaml@rework-description-tagging
     with:
       # App token so the opened PR triggers pr.yaml CI (a PR opened with the
       # default GITHUB_TOKEN does NOT trigger other workflows).

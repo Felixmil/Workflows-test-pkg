@@ -1,7 +1,7 @@
 ---
 # Nightly + on-demand check of the default branch against its CURRENT (dev)
 # dependencies: DESCRIPTION's Remotes as-is (bare on a dev main -> dev deps).
-name: check-dev-deps
+name: check-dev-deps.yaml
 
 on:
   schedule:

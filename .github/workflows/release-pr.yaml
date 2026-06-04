@@ -1,7 +1,7 @@
 ---
 # Manual "publish the release" button: open a release PR, bumping the version by
 # the chosen component (usethis::use_version).
-name: release-pr
+name: release-pr.yaml
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ permissions: write-all
 
 jobs:
   release-pr:
-    uses: Felixmil/Workflows/.github/workflows/release_pr.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/release-pr.yaml@rework-description-tagging
     with:
       which: ${{ inputs.which }}
       # App token so the opened PR triggers pr.yaml CI (a PR opened with the

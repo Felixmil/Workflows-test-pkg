@@ -3,7 +3,7 @@
 # OSP dependencies: pins Remotes to @*release ephemerally, then R CMD check.
 # Runs for every version (dev included), catching a dev version drifting out of
 # compatibility with released deps.
-name: check-released-deps
+name: check-released-deps.yaml
 
 on:
   schedule:

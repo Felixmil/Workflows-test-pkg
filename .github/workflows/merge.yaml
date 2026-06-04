@@ -8,7 +8,7 @@
 #
 # publish_release and bump_dev_version each detect the version kind internally
 # and no-op for the other kind, so both jobs run but only the matching one acts.
-name: merge
+name: merge.yaml
 
 on:
   push:
@@ -28,9 +28,9 @@ jobs:
   publish-release:
     needs: [R-CMD-check]
     if: ${{ needs.R-CMD-check.result == 'success' }}
-    uses: Felixmil/Workflows/.github/workflows/publish_release.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/publish-release.yaml@rework-description-tagging
 
   # Dev version on main -> bump the .NNNN suffix. bump_dev_version no-ops on a
   # release version. Independent of the release path.
   bump-dev-version:
-    uses: Felixmil/Workflows/.github/workflows/bump_dev_version.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/bump-dev-version.yaml@rework-description-tagging

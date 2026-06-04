@@ -50,23 +50,37 @@ bare Remotes; tag/release `v0.2.2` published with binary.
   `Felixmil/Workflows@rework-description-tagging` for testing; this is reverted
   to the upstream repo before the PR.
 
-## Known issue + fix: release/dev PRs need an App token to trigger CI
+## Resolved: release/dev PRs need an App token to trigger CI
 
 A PR opened by a workflow using the default `GITHUB_TOKEN` does **not** trigger
-other workflows (a GitHub safety rule against recursive Actions). So the release
-PR `release_pr` opened (PRs #8, #10) had **no `pr.yaml` / R-CMD-check runs** —
-it was merge-able without CI.
+other workflows (a GitHub safety rule against recursive Actions). So the early
+release PRs `release_pr` opened (PRs #8, #10, authored by `app/github-actions`)
+had **no `pr.yaml` / R-CMD-check runs** — merge-able without CI.
 
-**Fix:** open the PR with a GitHub App token instead. `release_pr`/`dev_pr`
-already mint and use an App token when `app-id`/`private-key` are provided (for
-both the branch push and `gh pr create`); the test-pkg callers now pass
-`vars.OSP_BOT_APP_ID` / `secrets.OSP_BOT_PRIVATE_KEY`. With no App configured the
-workflows fall back to `GITHUB_TOKEN` (PR opens, but no CI trigger).
+**Fix:** open the PR with a GitHub App token. `release_pr`/`dev_pr` mint and use
+an App token when `app-id`/`private-key` are provided (for both the branch push
+and `gh pr create`); the test-pkg callers pass `vars.OSP_BOT_APP_ID` /
+`secrets.OSP_BOT_PRIVATE_KEY`. With no App they fall back to `GITHUB_TOKEN`
+(PR opens, no CI trigger).
 
-**Manual step required (cannot be done from CI):**
-1. Create/instal a GitHub App on this repo with `contents: write` +
-   `pull_requests: write` (and `workflows: write` if it must edit workflows).
-2. Add repo variable `OSP_BOT_APP_ID` = the App ID.
-3. Add repo secret `OSP_BOT_PRIVATE_KEY` = the App private key (PEM).
-4. Re-dispatch `release-pr`; the opened PR should now run `pr.yaml`
-   (sync-remotes + R-CMD-check).
+**Confirmed working** — App `personal-actions-manager` installed on the repo:
+- `release-pr` dispatch → PR **#11** `release-pr-0.2.3`, authored by
+  **`app/personal-actions-manager`** (not the default Actions bot).
+- `pr.yaml` triggered on it and passed:
+  [run 26937162542](https://github.com/Felixmil/Workflows-test-pkg/actions/runs/26937162542)
+  (`sync-remotes` ✅ + `R-CMD-check` ✅).
+
+Setup that made it work (one-time, GitHub UI + secrets):
+1. GitHub App (personal account) with `contents: write` + `pull_requests: write`,
+   installed on this repo.
+2. Repo variable `OSP_BOT_APP_ID`; repo secret `OSP_BOT_PRIVATE_KEY` = the App
+   private key. The key must be a parseable PEM (convert with
+   `openssl pkcs8 -topk8 -nocrypt` if `create-github-app-token` reports
+   `Invalid keyData`).
+
+## Nightly schedule
+
+`check-dev-deps` (cron `0 3 * * *`) and `check-released-deps` (cron `0 4 * * *`)
+declare their schedules on `main`. Both jobs are validated via `workflow_dispatch`
+(green). GitHub commonly skips a newly-added cron's first occurrence, so the
+first *scheduled* fire is pending a natural nightly run.

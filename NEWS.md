@@ -1,4 +1,4 @@
-# WorkflowsTestPkg (development version)
+# WorkflowsTestPkg 0.2.3
 
 # WorkflowsTestPkg 0.2.2
 

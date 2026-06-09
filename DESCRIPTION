@@ -9,3 +9,6 @@ Encoding: UTF-8
 Remotes:
     tidyverse/dplyr@*release
 Config/roxygen2/version: 8.0.0
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

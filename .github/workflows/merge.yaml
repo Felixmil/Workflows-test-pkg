@@ -16,7 +16,7 @@ permissions: write-all
 
 jobs:
   R-CMD-check:
-    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@test-helper-checkout-default
     with:
       # Ubuntu-only matrix to keep test runs fast.
       os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
@@ -24,4 +24,4 @@ jobs:
   # Dev version on main -> bump the .NNNN suffix. bump-dev-version no-ops on a
   # release version.
   bump-dev-version:
-    uses: Felixmil/Workflows/.github/workflows/bump-dev-version.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/bump-dev-version.yaml@test-helper-checkout-default

@@ -14,11 +14,11 @@ permissions: write-all
 
 jobs:
   R-CMD-check:
-    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@test-helper-checkout-default
     with:
       os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'
 
   publish-release:
     needs: [R-CMD-check]
     if: ${{ needs.R-CMD-check.result == 'success' }}
-    uses: Felixmil/Workflows/.github/workflows/publish-release.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/publish-release.yaml@test-helper-checkout-default

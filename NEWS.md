@@ -9,3 +9,5 @@
 * Initial scaffold.
 * Test release to exercise publish_release end to end.
 * Validates NEWS.md notes extraction and per-OS binary attachment.
+
+<!-- sync-remotes happy-path test -->

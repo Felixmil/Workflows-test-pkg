@@ -18,7 +18,7 @@ permissions: write-all
 
 jobs:
   sync-remotes:
-    uses: Felixmil/Workflows/.github/workflows/sync-remotes.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/sync-remotes.yaml@main
 
   # needs: sync-remotes so the checkout includes the synced DESCRIPTION. On a
   # fork PR sync-remotes skips its push; a skipped need plus `!cancelled()` does
@@ -26,7 +26,7 @@ jobs:
   R-CMD-check:
     needs: [sync-remotes]
     if: ${{ !cancelled() }}
-    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@main
     with:
       # Ubuntu-only matrix to keep test runs fast.
       os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'

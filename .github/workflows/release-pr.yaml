@@ -20,7 +20,7 @@ permissions: write-all
 
 jobs:
   release-pr:
-    uses: Felixmil/Workflows/.github/workflows/release-pr.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/release-pr.yaml@main
     with:
       which: ${{ inputs.which }}
       # App token so the opened PR triggers pr.yaml CI (a PR opened with the

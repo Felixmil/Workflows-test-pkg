@@ -12,6 +12,6 @@ permissions: read-all
 
 jobs:
   R-CMD-check:
-    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@rework-description-tagging
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-build.yaml@main
     with:
       os-matrix: '[{"os": "ubuntu-latest", "r": "release"}]'

@@ -11,7 +11,11 @@ Imports:
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Remotes:
+Config/osp/dev-remotes:
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tidyverse/dplyr
+Config/osp/release-repositories:
+    https://open-systems-pharmacology.r-universe.dev
+Additional_repositories:
+    https://open-systems-pharmacology.r-universe.dev
 RoxygenNote: 7.3.2

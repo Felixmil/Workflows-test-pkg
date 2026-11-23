@@ -20,7 +20,7 @@ permissions: write-all
 
 jobs:
   release-pr:
-    uses: Felixmil/Workflows/.github/workflows/release-pr.yaml@main
+    uses: Felixmil/Workflows/.github/workflows/release-pr.yaml@test-266
     with:
       which: ${{ inputs.which }}
       # App token so the opened PR triggers pr.yaml CI (a PR opened with the

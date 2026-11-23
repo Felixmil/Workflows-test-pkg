@@ -532,8 +532,8 @@
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
-      "Version": "1.11.1",
-      "Source": "Repository",
+      "Version": "1.11.1.9002",
+      "Source": "GitHub",
       "Type": "Package",
       "Title": "Utility Functions for Open Systems Pharmacology R Packages",
       "Authors@R": "c( person(\"Open-Systems-Pharmacology Community\", role = c(\"cph\", \"fnd\")), person(\"Michael\", \"Sevestre\", , \"michael@design2code.ca\", role = c(\"aut\", \"cre\")), person(\"Pavel\", \"Balazki\", role = \"aut\"), person(\"Juri\", \"Solodenko\", role = \"aut\"), person(\"Indrajeet\", \"Patil\", , \"patilindrajeet.science@gmail.com\", role = \"aut\", comment = c(ORCID = \"0000-0003-1995-6531\", Twitter = \"@patilindrajeets\")) )",
@@ -567,14 +567,13 @@
       "RoxygenNote": "7.3.3",
       "Collate": "'enum.R' 'formatNumerics.R' 'logger.R' 'messages.R' 'objectCount.R' 'osp_print.R' 'utilities.R' 'ospsuite.utils-env.R' 'printable.R' 'utilities-conditional.R' 'utilities-logger.R' 'utilities-validation.R' 'validation-emptiness.R' 'validation-enum.R' 'validation-expected-length.R' 'validation-file-extensions.R' 'validation-inclusion.R' 'validation-options.R' 'validation-paths.R' 'validation-same-length.R' 'validation-type.R' 'validation-uniqueness.R' 'validation-utf.R' 'validation-vector.R'",
       "VignetteBuilder": "knitr",
-      "Config/pak/sysreqs": "libicu-dev",
-      "Repository": "https://open-systems-pharmacology.r-universe.dev",
-      "NeedsCompilation": "no",
       "Author": "Open-Systems-Pharmacology Community [cph, fnd], Michael Sevestre [aut, cre], Pavel Balazki [aut], Juri Solodenko [aut], Indrajeet Patil [aut] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)",
-      "RemoteType": "repository",
-      "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils",
-      "RemoteRef": "v1.11.1",
-      "RemoteSha": "6d22617df457ec6e89b21bd25a99bb3080e4fb6c"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "Open-Systems-Pharmacology",
+      "RemoteRepo": "OSPSuite.RUtils",
+      "RemoteRef": "main",
+      "RemoteSha": "a0191087a6c17ad0eb4d1e33d63bf0c8af66e0ea"
     },
     "otel": {
       "Package": "otel",

@@ -1,7 +1,7 @@
 Package: WorkflowsTestPkg
 Type: Package
 Title: Test Package for Felixmil/Workflows Reusable Workflows
-Version: 0.2.5
+Version: 0.2.5.9000
 Authors@R: person("Felix", "Mil", email = "felix.mil@esqlabs.com", role = c("aut", "cre"))
 Description: Minimal R package used to exercise the description-manager reusable workflow.
 License: MIT + file LICENSE
@@ -11,11 +11,7 @@ Imports:
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Config/osp/dev-remotes:
+Remotes:
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tidyverse/dplyr
-Config/osp/release-repositories:
-    https://open-systems-pharmacology.r-universe.dev
-Additional_repositories:
-    https://open-systems-pharmacology.r-universe.dev
 RoxygenNote: 7.3.2

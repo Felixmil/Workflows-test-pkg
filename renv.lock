@@ -33,7 +33,7 @@
       "NeedsCompilation": "no",
       "Author": "Winston Chang [aut, cre], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Winston Chang <winston@posit.co>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "brio": {
       "Package": "brio",
@@ -178,7 +178,7 @@
       "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre], Brodie Gaslam [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "desc": {
       "Package": "desc",
@@ -216,7 +216,7 @@
       "Collate": "'assertions.R' 'authors-at-r.R' 'built.R' 'classes.R' 'collate.R' 'constants.R' 'deps.R' 'desc-package.R' 'description.R' 'encoding.R' 'find-package-root.R' 'latex.R' 'non-oo-api.R' 'package-archives.R' 'read.R' 'remotes.R' 'str.R' 'syntax_checks.R' 'urls.R' 'utils.R' 'validate.R' 'version.R'",
       "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre], Kirill Müller [aut], Jim Hester [aut], Maëlle Salmon [ctb] (<https://orcid.org/0000-0002-2815-0399>), Posit Software, PBC [cph, fnd]",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "diffobj": {
       "Package": "diffobj",
@@ -328,7 +328,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jim Hester [aut], Hadley Wickham [aut], Gábor Csárdi [aut], Jeroen Ooms [cre], libuv project contributors [cph] (libuv library), Joyent, Inc. and other Node contributors [cph] (libuv library), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "glue": {
       "Package": "glue",
@@ -369,7 +369,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Jennifer Bryan [aut, cre] (ORCID: <https://orcid.org/0000-0002-6983-2759>), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "jsonlite": {
       "Package": "jsonlite",
@@ -399,7 +399,7 @@
       "Encoding": "UTF-8",
       "NeedsCompilation": "yes",
       "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>), Duncan Temple Lang [ctb], Lloyd Hilaiel [cph] (author of bundled libyajl)",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "lifecycle": {
       "Package": "lifecycle",
@@ -439,7 +439,7 @@
       "NeedsCompilation": "no",
       "Author": "Lionel Henry [aut, cre], Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Lionel Henry <lionel@posit.co>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "logger": {
       "Package": "logger",
@@ -528,12 +528,12 @@
       "NeedsCompilation": "yes",
       "Author": "Stefan Milton Bache [aut, cph] (Original author and creator of magrittr), Hadley Wickham [aut], Lionel Henry [cre], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Lionel Henry <lionel@posit.co>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
-      "Version": "1.11.1.9002",
-      "Source": "GitHub",
+      "Version": "1.11.1",
+      "Source": "Repository",
       "Type": "Package",
       "Title": "Utility Functions for Open Systems Pharmacology R Packages",
       "Authors@R": "c( person(\"Open-Systems-Pharmacology Community\", role = c(\"cph\", \"fnd\")), person(\"Michael\", \"Sevestre\", , \"michael@design2code.ca\", role = c(\"aut\", \"cre\")), person(\"Pavel\", \"Balazki\", role = \"aut\"), person(\"Juri\", \"Solodenko\", role = \"aut\"), person(\"Indrajeet\", \"Patil\", , \"patilindrajeet.science@gmail.com\", role = \"aut\", comment = c(ORCID = \"0000-0003-1995-6531\", Twitter = \"@patilindrajeets\")) )",
@@ -567,13 +567,14 @@
       "RoxygenNote": "7.3.3",
       "Collate": "'enum.R' 'formatNumerics.R' 'logger.R' 'messages.R' 'objectCount.R' 'osp_print.R' 'utilities.R' 'ospsuite.utils-env.R' 'printable.R' 'utilities-conditional.R' 'utilities-logger.R' 'utilities-validation.R' 'validation-emptiness.R' 'validation-enum.R' 'validation-expected-length.R' 'validation-file-extensions.R' 'validation-inclusion.R' 'validation-options.R' 'validation-paths.R' 'validation-same-length.R' 'validation-type.R' 'validation-uniqueness.R' 'validation-utf.R' 'validation-vector.R'",
       "VignetteBuilder": "knitr",
+      "Config/pak/sysreqs": "libicu-dev",
+      "Repository": "https://open-systems-pharmacology.r-universe.dev",
+      "NeedsCompilation": "no",
       "Author": "Open-Systems-Pharmacology Community [cph, fnd], Michael Sevestre [aut, cre], Pavel Balazki [aut], Juri Solodenko [aut], Indrajeet Patil [aut] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "Open-Systems-Pharmacology",
-      "RemoteRepo": "OSPSuite.RUtils",
-      "RemoteRef": "main",
-      "RemoteSha": "a0191087a6c17ad0eb4d1e33d63bf0c8af66e0ea"
+      "RemoteType": "repository",
+      "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils",
+      "RemoteRef": "v1.11.1",
+      "RemoteSha": "6d22617df457ec6e89b21bd25a99bb3080e4fb6c"
     },
     "otel": {
       "Package": "otel",
@@ -851,7 +852,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Lionel Henry [aut], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "renv": {
       "Package": "renv",
@@ -975,7 +976,7 @@
       "NeedsCompilation": "no",
       "Author": "Kirill Müller [aut, cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>)",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "stringi": {
       "Package": "stringi",
@@ -1117,7 +1118,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut], Lionel Henry [aut], Davis Vaughan [aut, cre], data.table team [cph] (Radix sort based on data.table's forder() and their contribution to R's order()), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Davis Vaughan <davis@posit.co>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     },
     "waldo": {
       "Package": "waldo",
@@ -1192,7 +1193,7 @@
       "NeedsCompilation": "no",
       "Author": "Jim Hester [aut], Lionel Henry [aut, cre], Kirill Müller [aut], Kevin Ushey [aut], Hadley Wickham [aut], Winston Chang [aut], Jennifer Bryan [ctb], Richard Cotton [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Lionel Henry <lionel@posit.co>",
-      "Repository": "PPM"
+      "Repository": "RSPM"
     }
   }
 }

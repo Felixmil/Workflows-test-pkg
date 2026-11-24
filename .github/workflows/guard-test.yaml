@@ -1,0 +1,43 @@
+name: guard-test
+on:
+  push:
+    branches: [guard-test]
+permissions: read-all
+jobs:
+  sync-remotes-stub:
+    uses: Felixmil/Workflows/.github/workflows/sync-remotes.yaml@drop-sync-remotes
+  guard:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        case: [release-with-remotes, dev-after-manual-bump, dev-ok]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Prepare DESCRIPTION
+        shell: bash
+        run: |
+          case "${{ matrix.case }}" in
+            release-with-remotes) ;;  # main: 0.2.4 with Remotes
+            dev-after-manual-bump)
+              sed -i.bak -e 's/^Version:.*/Version: 0.2.4.9000/' -e '/^Remotes:/,/^    /d' DESCRIPTION
+              printf 'Config/osp/dev-remotes: tidyverse/dplyr\nConfig/osp/release-repositories: https://open-systems-pharmacology.r-universe.dev\n' >> DESCRIPTION ;;
+            dev-ok)
+              sed -i.bak -e 's/^Version:.*/Version: 0.2.4.9000/' DESCRIPTION ;;
+          esac
+          cat DESCRIPTION
+      - id: env
+        continue-on-error: true
+        uses: Felixmil/Workflows/.github/actions/setup-r-env@drop-sync-remotes
+        with:
+          dotnet-version: ''
+          ignore-renv: 'true'
+      - name: Assert outcome
+        shell: bash
+        run: |
+          echo "outcome=${{ steps.env.outcome }}"
+          case "${{ matrix.case }}" in
+            dev-ok) [ "${{ steps.env.outcome }}" = success ] ;;
+            *) [ "${{ steps.env.outcome }}" = failure ] ;;
+          esac
